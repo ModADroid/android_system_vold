@@ -1117,12 +1117,13 @@ int VolumeManager::shareVolume(const char *label, const char *method) {
     // TODO: Currently only two mounts are supported, defaulting
     // /mnt/sdcard to lun0 and anything else to lun1. Fix this.
     if (0 == strcmp(label, "/mnt/sdcard")) {
-        if ((fd = open(CUSTOM_LUN_FILE"0/file",
+        //!DIRTYHACK!
+        if ((fd = open(CUSTOM_LUN_FILE"1/file",
                        O_WRONLY)) < 0) {
             SLOGE("Unable to open ums lunfile (%s)", strerror(errno));
             return -1;
         }
-        SLOGD("Opened %s", CUSTOM_LUN_FILE"0/file");
+        SLOGD("Opened %s", CUSTOM_LUN_FILE"1/file");
     }
     else {
         if ((fd = open(CUSTOM_LUN_FILE"1/file",
@@ -1181,7 +1182,8 @@ int VolumeManager::unshareVolume(const char *label, const char *method) {
 
     // /mnt/sdcard to lun0 and anything else to lun1. Fix this.
     if (0 == strcmp(label, "/mnt/sdcard")) {
-        if ((fd = open(CUSTOM_LUN_FILE"0/file", O_WRONLY)) < 0) {
+        //!DIRTYHACK!
+        if ((fd = open(CUSTOM_LUN_FILE"1/file", O_WRONLY)) < 0) {
             SLOGE("Unable to open ums lunfile (%s)", strerror(errno));
             return -1;
         }
